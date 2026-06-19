@@ -67,7 +67,7 @@ Scored across six weighted dimensions. See [METHODOLOGY.md](METHODOLOGY.md) for 
 
 **Live security vulnerability** — laraowl's `VerifyLaraowlToken` middleware compares API tokens with direct string equality instead of `hash_equals()`, making it vulnerable to timing attacks.
 
-For the full analysis, read [`INSIGHTS.md`](INSIGHTS.md) or open the [interactive dashboard](https://claude.ai/code/artifact/42562f7f-8024-4f0a-9349-93ce768f5ae8).
+For the full analysis, read [`INSIGHTS.md`](INSIGHTS.md) or open the [interactive dashboard](https://inuartech.com/laravel-projects-reviewed/).
 
 ---
 
