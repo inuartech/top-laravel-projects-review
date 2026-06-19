@@ -32,7 +32,7 @@ PHPStan was run against each project from the workspace root — without loading
 PHPSTAN_TABLE_ERROR_FORMATTER_FORCE_SHOW_ALL_ERRORS=1 \
   /opt/homebrew/opt/php@8.4/bin/php ./vendor/bin/phpstan analyse \
   --memory-limit=2G apps/<project> \
-  --error-format=json 2>/dev/null > <project>.json
+  --error-format=json 2>/dev/null > outputs/<project>.json
 ```
 
 Key flags:
@@ -46,7 +46,7 @@ Key flags:
 
 ```python
 import json
-d = json.load(open('<project>.json'))
+d = json.load(open('outputs/<project>.json'))
 total_errors = d['totals']['file_errors'] + d['totals']['errors']
 ```
 
@@ -246,4 +246,4 @@ This analysis is entirely static — no application was run, no database was que
 
 ---
 
-*See [README.md](README.md) for the full ranking table and key findings. See [insights.md](insights.md) for editorial synthesis.*
+*See [README.md](README.md) for the full ranking table and key findings. See [INSIGHTS.md](INSIGHTS.md) for editorial synthesis.*

@@ -6,10 +6,10 @@ A comparative engineering review of 11 production open-source Laravel applicatio
 
 | File | Description |
 |------|-------------|
-| [`insights.md`](insights.md) | Editorial synthesis — patterns, red flags, who to follow, lessons learned |
+| [`INSIGHTS.md`](INSIGHTS.md) | Editorial synthesis — patterns, red flags, who to follow, lessons learned |
 | [`METHODOLOGY.md`](METHODOLOGY.md) | Full methodology: scoring rubric, PHPStan baseline, git metrics, limitations |
 | [HTML Artifact](https://claude.ai/code/artifact/42562f7f-8024-4f0a-9349-93ce768f5ae8) | Interactive scorecard dashboard with rankings, scorecards, insights, contributor profiles |
-| `<project>.json` | Raw PHPStan JSON output per project (workspace root) |
+| `outputs/<project>.json` | Raw PHPStan JSON output per project |
 
 ---
 
@@ -67,7 +67,7 @@ Scored across six weighted dimensions. See [METHODOLOGY.md](METHODOLOGY.md) for 
 
 **Live security vulnerability** — laraowl's `VerifyLaraowlToken` middleware compares API tokens with direct string equality instead of `hash_equals()`, making it vulnerable to timing attacks.
 
-For the full analysis, read [`insights.md`](insights.md) or open the [interactive dashboard](https://claude.ai/code/artifact/42562f7f-8024-4f0a-9349-93ce768f5ae8).
+For the full analysis, read [`INSIGHTS.md`](INSIGHTS.md) or open the [interactive dashboard](https://claude.ai/code/artifact/42562f7f-8024-4f0a-9349-93ce768f5ae8).
 
 ---
 
