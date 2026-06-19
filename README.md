@@ -8,7 +8,7 @@ A comparative engineering review of 11 production open-source Laravel applicatio
 |------|-------------|
 | [`INSIGHTS.md`](INSIGHTS.md) | Editorial synthesis — patterns, red flags, who to follow, lessons learned |
 | [`METHODOLOGY.md`](METHODOLOGY.md) | Full methodology: scoring rubric, PHPStan baseline, git metrics, limitations |
-| [HTML Artifact](https://claude.ai/code/artifact/42562f7f-8024-4f0a-9349-93ce768f5ae8) | Interactive scorecard dashboard with rankings, scorecards, insights, contributor profiles |
+| [`outputs/index.html`](outputs/index.html) · [Live](https://claude.ai/code/artifact/42562f7f-8024-4f0a-9349-93ce768f5ae8) | Interactive scorecard dashboard with rankings, scorecards, insights, contributor profiles |
 | `outputs/<project>.json` | Raw PHPStan JSON output per project |
 
 ---

@@ -1,0 +1,1639 @@
+<title>Laravel Engineering Portfolio Review — June 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --ground:   #080D18;
+  --surface:  #0F1628;
+  --surface2: #172040;
+  --border:   #1E2E52;
+  --text:     #C8D4E8;
+  --muted:    #5A6E92;
+  --accent:   #5865F2;
+  --amber:    #E89823;
+  --emerald:  #3DD68C;
+  --rose:     #F4615B;
+  --mono: ui-monospace,'Cascadia Code','Source Code Pro',Menlo,monospace;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ground);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* LAYOUT */
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+section+section{border-top:1px solid var(--border)}
+
+/* TYPOGRAPHY */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+}
+h1{
+  font-family:var(--mono);
+  font-size:clamp(2.4rem,6vw,4.8rem);
+  font-weight:700;
+  line-height:1.05;
+  color:#fff;
+  letter-spacing:-0.03em;
+}
+h2{
+  font-family:var(--mono);
+  font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:700;
+  color:#fff;
+  letter-spacing:-0.02em;
+  margin-bottom:32px;
+}
+h3{
+  font-size:1rem;
+  font-weight:600;
+  color:#fff;
+  margin-bottom:12px;
+}
+p{color:var(--text);line-height:1.75}
+
+/* HEADER */
+header{
+  background:linear-gradient(180deg,#0d1528 0%,var(--ground) 100%);
+  border-bottom:1px solid var(--border);
+  padding:80px 0 64px;
+}
+.header-meta{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-bottom:40px;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--muted);
+}
+.header-meta span{display:flex;align-items:center;gap:6px}
+.header-meta span::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.header-meta span:first-child::before{display:none}
+
+.hero-lead{
+  max-width:640px;
+  margin:24px 0 48px;
+  font-size:1.1rem;
+  color:var(--muted);
+}
+
+.stats-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin-top:48px;
+}
+.stat-cell{
+  background:var(--surface);
+  padding:20px 24px;
+  text-align:center;
+}
+.stat-num{
+  font-family:var(--mono);
+  font-size:1.8rem;
+  font-weight:700;
+  color:#fff;
+  display:block;
+  letter-spacing:-0.04em;
+}
+.stat-label{
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* MINI LEADERBOARD GRID */
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin-top:48px;
+}
+.mini-card{
+  background:var(--surface);
+  padding:16px 20px;
+  cursor:pointer;
+  transition:background 0.15s;
+  position:relative;
+  overflow:hidden;
+}
+.mini-card:hover{background:var(--surface2)}
+.mini-rank{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-family:var(--mono);
+  font-size:3.5rem;
+  font-weight:700;
+  opacity:0.06;
+  color:#fff;
+  line-height:1;
+  pointer-events:none;
+}
+.mini-name{
+  font-family:var(--mono);
+  font-size:14px;
+  font-weight:600;
+  color:#fff;
+  margin-bottom:6px;
+}
+.mini-score{
+  font-family:var(--mono);
+  font-size:1.5rem;
+  font-weight:700;
+  line-height:1;
+}
+.mini-tag{
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:6px;
+}
+
+/* SCORE COLORS */
+.score-great{color:var(--emerald)}
+.score-good{color:#F0C040}
+.score-poor{color:var(--rose)}
+.badge-great{background:rgba(61,214,140,0.12);color:var(--emerald)}
+.badge-good{background:rgba(240,192,64,0.12);color:#F0C040}
+.badge-poor{background:rgba(244,97,91,0.12);color:var(--rose)}
+
+/* RANKING TABLE */
+.rank-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.rank-table th{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-align:left;
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+.rank-table th:not(:first-child){text-align:center}
+.rank-table td{
+  padding:0;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.rank-table tbody tr:hover .row-inner{background:var(--surface2)}
+.row-inner{
+  display:grid;
+  grid-template-columns:48px 1fr 120px repeat(6,52px) 80px 70px;
+  align-items:center;
+  padding:14px 16px;
+  gap:0;
+  transition:background 0.12s;
+  cursor:pointer;
+}
+.rank-num{
+  font-family:var(--mono);
+  font-weight:700;
+  font-size:20px;
+  color:var(--muted);
+  text-align:left;
+  min-width:48px;
+}
+.rank-1 .rank-num{color:var(--emerald)}
+.rank-2 .rank-num{color:var(--emerald);opacity:0.7}
+.rank-3 .rank-num{color:var(--emerald);opacity:0.5}
+.proj-name{
+  font-family:var(--mono);
+  font-weight:600;
+  font-size:15px;
+  color:#fff;
+}
+.proj-maintainer{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+}
+.overall-score{
+  font-family:var(--mono);
+  font-weight:700;
+  font-size:22px;
+  text-align:center;
+  padding:0 8px;
+}
+.dim-badge{
+  font-family:var(--mono);
+  font-weight:700;
+  font-size:13px;
+  text-align:center;
+  padding:4px 0;
+  border-radius:4px;
+  margin:0 3px;
+  min-width:38px;
+  display:inline-block;
+}
+.phpstan-cell{
+  font-family:var(--mono);
+  font-size:12px;
+  text-align:right;
+  color:var(--muted);
+  padding-right:4px;
+}
+.activity-cell{
+  font-family:var(--mono);
+  font-size:12px;
+  text-align:right;
+  color:var(--muted);
+}
+.score-bar-wrap{
+  width:80px;
+  height:4px;
+  background:var(--border);
+  border-radius:2px;
+  overflow:hidden;
+}
+.score-bar-fill{
+  height:100%;
+  border-radius:2px;
+  transition:width 0.6s ease;
+}
+
+/* TABLE DIM HEADINGS */
+.dim-th{text-align:center!important;width:52px}
+
+/* ACCORDION */
+.proj-accordion{display:flex;flex-direction:column;gap:1px;background:var(--border);border-radius:8px;overflow:hidden}
+.proj-item{}
+.proj-trigger{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  padding:20px 24px;
+  background:var(--surface);
+  border:none;
+  color:var(--text);
+  cursor:pointer;
+  text-align:left;
+  transition:background 0.12s;
+}
+.proj-trigger:hover{background:var(--surface2)}
+.proj-trigger.active{background:var(--surface2)}
+.trigger-left{display:flex;align-items:center;gap:16px}
+.trigger-rank{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted);
+  letter-spacing:0.05em;
+  min-width:28px;
+}
+.trigger-name{
+  font-family:var(--mono);
+  font-size:16px;
+  font-weight:700;
+  color:#fff;
+}
+.trigger-tag{
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:3px;
+  background:var(--surface2);
+  color:var(--muted);
+}
+.trigger-right{display:flex;align-items:center;gap:20px}
+.trigger-score{
+  font-family:var(--mono);
+  font-size:24px;
+  font-weight:700;
+}
+.trigger-chevron{
+  color:var(--muted);
+  transition:transform 0.2s;
+  flex-shrink:0;
+}
+.proj-trigger.active .trigger-chevron{transform:rotate(180deg)}
+
+.proj-panel{
+  display:none;
+  background:var(--ground);
+  padding:32px 24px;
+  border-top:1px solid var(--border);
+}
+.proj-panel.open{display:block}
+
+/* SCORECARD GRID */
+.scorecard-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:1px;
+  background:var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:32px;
+}
+.score-cell{
+  background:var(--surface);
+  padding:16px;
+  text-align:center;
+}
+.score-cell-label{
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.score-cell-num{
+  font-family:var(--mono);
+  font-size:2.4rem;
+  font-weight:700;
+  line-height:1;
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-top:24px;
+}
+.detail-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:20px;
+}
+.detail-card h4{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.detail-card ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.detail-card li{
+  font-size:13px;
+  color:var(--text);
+  padding-left:16px;
+  position:relative;
+  line-height:1.5;
+}
+.detail-card li::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:8px;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+}
+.strengths li::before{background:var(--emerald)}
+.weaknesses li::before{background:var(--amber)}
+.risks li::before{background:var(--rose)}
+.recs li::before{background:var(--accent)}
+
+.phpstan-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin-top:24px;
+}
+.phpstan-cell-inner{
+  background:var(--surface);
+  padding:14px 18px;
+  text-align:center;
+}
+.phpstan-cell-num{
+  font-family:var(--mono);
+  font-size:1.4rem;
+  font-weight:700;
+  color:#fff;
+}
+.phpstan-cell-label{
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* INSIGHTS */
+.insights-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+.insight-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:28px;
+}
+.insight-card.accent-amber{border-color:rgba(232,152,35,0.35)}
+.insight-card.accent-emerald{border-color:rgba(61,214,140,0.35)}
+.insight-card.accent-rose{border-color:rgba(244,97,91,0.35)}
+.insight-card.accent-blue{border-color:rgba(88,101,242,0.35)}
+.insight-icon{
+  font-size:24px;
+  margin-bottom:12px;
+}
+.insight-card h3{
+  font-family:var(--mono);
+  font-size:14px;
+  letter-spacing:0.04em;
+  color:#fff;
+  margin-bottom:12px;
+}
+.insight-card p,.insight-card li{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.65;
+}
+.insight-card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.insight-card li{padding-left:14px;position:relative}
+.insight-card li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:11px;top:2px}
+
+/* CONTRIBUTORS */
+.contrib-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:16px;
+}
+.contrib-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:20px;
+}
+.contrib-name{
+  font-family:var(--mono);
+  font-size:14px;
+  font-weight:700;
+  color:#fff;
+  margin-bottom:4px;
+}
+.contrib-handle{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+.contrib-project{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.contrib-stat{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:12px;
+  padding:4px 0;
+  border-top:1px solid var(--border);
+}
+.contrib-stat:first-of-type{margin-top:12px}
+.contrib-stat-label{color:var(--muted)}
+.contrib-stat-value{
+  font-family:var(--mono);
+  font-weight:700;
+  color:#fff;
+}
+.contrib-why{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:12px;
+  line-height:1.6;
+  padding-top:12px;
+  border-top:1px solid var(--border);
+}
+
+/* LESSONS */
+.lessons-grid{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+.lesson-item{
+  display:grid;
+  grid-template-columns:48px 1fr;
+  gap:20px;
+  align-items:start;
+}
+.lesson-num{
+  font-family:var(--mono);
+  font-size:2rem;
+  font-weight:700;
+  color:var(--border);
+  line-height:1.2;
+}
+.lesson-title{
+  font-family:var(--mono);
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+  margin-bottom:8px;
+}
+.lesson-body{font-size:14px;color:var(--muted);line-height:1.75}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 0;
+  background:var(--surface);
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.footer-note{font-size:12px;color:var(--muted);font-family:var(--mono)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .row-inner{grid-template-columns:40px 1fr 90px repeat(6,40px) 60px;font-size:13px}
+  .insights-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .scorecard-grid{grid-template-columns:repeat(3,1fr)}
+  .phpstan-strip{grid-template-columns:1fr 1fr}
+  .mini-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+}
+@media(max-width:640px){
+  h1{font-size:2rem}
+  .row-inner{
+    grid-template-columns:32px 1fr 70px;
+    font-size:13px;
+  }
+  .dim-cols{display:none}
+  .phpstan-col{display:none}
+  .activity-col{display:none}
+  .stats-strip{grid-template-columns:1fr 1fr}
+  .contrib-grid{grid-template-columns:1fr}
+}
+
+/* NAV */
+.sticky-nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(8,13,24,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+}
+.nav-inner{
+  max-width:1160px;
+  margin:0 auto;
+  display:flex;
+  gap:0;
+  align-items:center;
+  overflow-x:auto;
+}
+.nav-link{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:16px 20px;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  text-decoration:none;
+  transition:color 0.15s, border-color 0.15s;
+}
+.nav-link:hover{color:#fff;text-decoration:none;border-color:var(--accent)}
+.nav-wordmark{
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:700;
+  color:#fff;
+  margin-right:24px;
+  white-space:nowrap;
+  padding:16px 0;
+}
+
+/* SCORE BAR ANIMATION */
+@keyframes barIn{from{width:0}to{width:var(--bar-w)}}
+.score-bar-fill.animate{animation:barIn 0.8s ease forwards}
+
+/* PATTERN TAGS */
+.pattern-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.pattern-tag{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.06em;
+  padding:3px 8px;
+  border-radius:3px;
+  background:var(--surface2);
+  color:var(--muted);
+  border:1px solid var(--border);
+}
+
+/* RED FLAG STRIP */
+.red-flag{
+  display:flex;
+  align-items:start;
+  gap:12px;
+  padding:16px;
+  background:rgba(244,97,91,0.06);
+  border:1px solid rgba(244,97,91,0.25);
+  border-radius:6px;
+  margin-top:16px;
+}
+.red-flag-icon{color:var(--rose);flex-shrink:0;margin-top:2px}
+.red-flag-text{font-size:13px;color:var(--muted);line-height:1.6}
+.red-flag-text strong{color:var(--rose)}
+</style>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <span class="nav-wordmark">⚡ PHP Review</span>
+    <a href="#rankings" class="nav-link">Rankings</a>
+    <a href="#projects" class="nav-link">Scorecards</a>
+    <a href="#insights" class="nav-link">Insights</a>
+    <a href="#contributors" class="nav-link">Who to Follow</a>
+    <a href="#lessons" class="nav-link">Lessons</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap">
+    <div class="header-meta">
+      <span>June 2026</span>
+      <span>11 Projects</span>
+      <span>PHPStan 2.2.2</span>
+      <span>PHP 8.4 · Larastan 3.x</span>
+    </div>
+
+    <div class="eyebrow">Open-Source Laravel Engineering Portfolio Review</div>
+    <h1>Who's building<br>Laravel right?</h1>
+    <p class="hero-lead">
+      We put 11 open-source Laravel codebases through static analysis, architecture review,
+      and git forensics. Six dimensions. One weighted score. Opinions included.
+    </p>
+
+    <div class="stats-strip">
+      <div class="stat-cell">
+        <span class="stat-num score-great">11</span>
+        <div class="stat-label">Projects Analysed</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">2.6M</span>
+        <div class="stat-label">Total Lines of Code</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">2,547</span>
+        <div class="stat-label">Commits (90 days)</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num score-poor">68,220</span>
+        <div class="stat-label">PHPStan Errors Found</div>
+      </div>
+    </div>
+
+    <!-- MINI LEADERBOARD -->
+    <div class="mini-grid" style="margin-top:40px">
+      <div class="mini-card" onclick="openProject('koel')">
+        <div class="mini-rank">1</div>
+        <div class="mini-name">koel</div>
+        <div class="mini-score score-great">8.70</div>
+        <div class="mini-tag">Architecture Reference</div>
+      </div>
+      <div class="mini-card" onclick="openProject('subscriptionify')">
+        <div class="mini-rank">2</div>
+        <div class="mini-name">subscriptionify</div>
+        <div class="mini-score score-great">8.20</div>
+        <div class="mini-tag">Package Gold Standard</div>
+      </div>
+      <div class="mini-card" onclick="openProject('monica')">
+        <div class="mini-rank">3</div>
+        <div class="mini-name">monica</div>
+        <div class="mini-score score-great">7.95</div>
+        <div class="mini-tag">DDD Reference</div>
+      </div>
+      <div class="mini-card" onclick="openProject('bookstack')">
+        <div class="mini-rank">4</div>
+        <div class="mini-name">bookstack</div>
+        <div class="mini-score score-great">7.70</div>
+        <div class="mini-tag">Solo Maintainer Excellence</div>
+      </div>
+      <div class="mini-card" onclick="openProject('october')">
+        <div class="mini-rank">5</div>
+        <div class="mini-name">october</div>
+        <div class="mini-score" style="color:#F0C040">7.15</div>
+        <div class="mini-tag">CMS Architecture</div>
+      </div>
+      <div class="mini-card" onclick="openProject('invoiceninja')">
+        <div class="mini-rank">6</div>
+        <div class="mini-name">invoiceninja</div>
+        <div class="mini-score" style="color:#F0C040">6.85</div>
+        <div class="mini-tag">Highest Activity</div>
+      </div>
+      <div class="mini-card" onclick="openProject('bagisto')">
+        <div class="mini-rank">7</div>
+        <div class="mini-name">bagisto</div>
+        <div class="mini-score" style="color:#F0C040">6.80</div>
+        <div class="mini-tag">Commerce Platform</div>
+      </div>
+      <div class="mini-card" onclick="openProject('coolify')">
+        <div class="mini-rank">8</div>
+        <div class="mini-name">coolify</div>
+        <div class="mini-score" style="color:#F0C040">6.65</div>
+        <div class="mini-tag">Highest Community</div>
+      </div>
+      <div class="mini-card" onclick="openProject('laraowl')">
+        <div class="mini-rank">9</div>
+        <div class="mini-name">laraowl</div>
+        <div class="mini-score" style="color:#F0C040">6.40</div>
+        <div class="mini-tag">Security Risk</div>
+      </div>
+      <div class="mini-card" onclick="openProject('akaunting')">
+        <div class="mini-rank">10</div>
+        <div class="mini-name">akaunting</div>
+        <div class="mini-score" style="color:#F0C040">6.25</div>
+        <div class="mini-tag">Security Concern</div>
+      </div>
+      <div class="mini-card" onclick="openProject('cachet')">
+        <div class="mini-rank">11</div>
+        <div class="mini-name">cachet</div>
+        <div class="mini-score score-poor">4.95</div>
+        <div class="mini-tag">Avoid as Reference</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- RANKING TABLE -->
+<section id="rankings">
+  <div class="wrap">
+    <div class="eyebrow">Full Ranking</div>
+    <h2>Weighted Scores</h2>
+    <p style="margin-bottom:32px;color:var(--muted);font-size:14px">
+      Formula: Architecture×0.25 + Code Quality×0.25 + Maintainability×0.20 + Design Patterns×0.10 + Technical Debt×0.10 + Activity×0.10
+    </p>
+    <div style="overflow-x:auto">
+    <table class="rank-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Project</th>
+          <th style="text-align:center">Overall</th>
+          <th class="dim-th dim-cols">Arch</th>
+          <th class="dim-th dim-cols">Qual</th>
+          <th class="dim-th dim-cols">Maint</th>
+          <th class="dim-th dim-cols">Patt</th>
+          <th class="dim-th dim-cols">Debt</th>
+          <th class="dim-th dim-cols">Act</th>
+          <th class="phpstan-col" style="text-align:right">PHPStan Errors</th>
+          <th class="activity-col" style="text-align:right">Commits/90d</th>
+        </tr>
+      </thead>
+      <tbody id="rankTableBody"></tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT SCORECARDS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">Project Scorecards</div>
+    <h2>Detailed Review</h2>
+    <p style="margin-bottom:32px;color:var(--muted);font-size:14px">Click any project to expand its full assessment.</p>
+    <div class="proj-accordion" id="accordion"></div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="wrap">
+    <div class="eyebrow">Cross-Project Analysis</div>
+    <h2>What Everyone Gets Wrong</h2>
+    <div class="insights-grid">
+
+      <div class="insight-card accent-rose">
+        <div class="insight-icon">⚠️</div>
+        <h3>PHPStan: Checkbox, Not Gate</h3>
+        <p style="margin-bottom:12px">9 of 11 projects have PHPStan. Only 2 use it honestly.</p>
+        <ul>
+          <li>subscriptionify: level max, zero blanket suppressions</li>
+          <li>koel: level 5 with targeted, commented ignores</li>
+          <li>invoiceninja suppresses "Call to undefined method" — in a financial app</li>
+          <li>akaunting: no phpstan.neon exists, despite handling taxes and reconciliation</li>
+          <li>The pattern: PHPStan is added to composer.json, configured at whatever level passes, and never blocks a merge</li>
+        </ul>
+      </div>
+
+      <div class="insight-card accent-amber">
+        <div class="insight-icon">🏛️</div>
+        <h3>God Classes Never Die — They Move</h3>
+        <p style="margin-bottom:12px">The fat controller died. The 4,894-line job class lives on.</p>
+        <ul>
+          <li>coolify ApplicationDeploymentJob: 4,894 LOC — Git, Docker, Nixpacks, health checks, rollback in one class</li>
+          <li>invoiceninja PdfBuilder: 2,410 LOC — the Action pattern didn't reach here</li>
+          <li>bagisto Cart.php: 1,204 LOC, zero test coverage</li>
+          <li>invoiceninja BaseRepository::alternativeSave(): 444 lines in a single method</li>
+          <li>Decomposition requires discipline at every layer — one pattern can't solve it</li>
+        </ul>
+      </div>
+
+      <div class="insight-card accent-rose">
+        <div class="insight-icon">🔓</div>
+        <h3>Security Advisories Suppressed in Financial Apps</h3>
+        <p style="margin-bottom:12px">The most serious finding in this corpus.</p>
+        <ul>
+          <li><strong style="color:var(--rose)">akaunting</strong>: 22 Packagist security advisories suppressed with block-insecure: false — an accounting application</li>
+          <li><strong style="color:var(--amber)">october</strong>: advisories block explicitly disabled</li>
+          <li><strong style="color:var(--rose)">laraowl</strong>: VerifyLaraowlToken compares API tokens in plaintext — timing attack vulnerability</li>
+          <li>Short-term fix ("it blocked our install") becomes permanent policy</li>
+          <li>Vendor forking in akaunting's override/ means upstream security patches don't automatically apply</li>
+        </ul>
+      </div>
+
+      <div class="insight-card accent-emerald">
+        <div class="insight-icon">📈</div>
+        <h3>What the Top Three Did Differently</h3>
+        <p style="margin-bottom:12px">koel (8.70), subscriptionify (8.20), and monica (7.95) share three practices the rest don't.</p>
+        <ul>
+          <li>Zero global helper function files — everything injectable via the container</li>
+          <li>readonly final Value Objects / DTOs with private constructors and static make()</li>
+          <li>PHPStan run at a level that actually enforces — not a level chosen because it passes</li>
+          <li>koel uniquely has a CLAUDE.md that encodes architecture as refusable rules, not prose documentation</li>
+          <li>All three use vertical-slice or feature-folder organisation rather than flat Laravel scaffolding</li>
+        </ul>
+      </div>
+
+      <div class="insight-card accent-blue">
+        <div class="insight-icon">🧩</div>
+        <h3>Patterns Converging Across the Ecosystem</h3>
+        <p style="margin-bottom:12px">What's becoming the new normal in serious Laravel codebases.</p>
+        <ul>
+          <li>Action classes (lorisleiva/laravel-actions) replacing fat controllers — now mainstream</li>
+          <li>AI integration as first-class: koel (app/Ai/), coolify (laravel/mcp), bagisto (laravel/ai 0.2.2)</li>
+          <li>Inertia.js + Vue/React replacing Blade for data-heavy UIs</li>
+          <li>Repository pattern is table stakes, not an architectural decision anymore</li>
+          <li>Vertical-slice (DDD-inspired) over flat MVC is the emerging separator between top and middle tier</li>
+        </ul>
+      </div>
+
+      <div class="insight-card accent-amber">
+        <div class="insight-icon">📦</div>
+        <h3>Package Constraints Force Better Design</h3>
+        <p style="margin-bottom:12px">subscriptionify at 5K LOC scores higher than most full applications.</p>
+        <ul>
+          <li>Package development forces interface contracts — you can't know what the host app looks like</li>
+          <li>Injectable dependencies, config-driven behaviour, testability in isolation are requirements, not choices</li>
+          <li>Full application developers avoid these decisions because they don't have to — and the debt accumulates</li>
+          <li>PHPStan density of 119/KLOC for subscriptionify reflects framework-magic reliance in an isolated context, not poor quality</li>
+          <li>Building a package before a feature is a useful architectural forcing function</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHO TO FOLLOW -->
+<section id="contributors">
+  <div class="wrap">
+    <div class="eyebrow">Contributor Analysis</div>
+    <h2>Who Is Worth Following</h2>
+    <p style="margin-bottom:32px;color:var(--muted);font-size:14px">Based on code quality signals, commit discipline, and architectural choices — not just commit count.</p>
+    <div class="contrib-grid">
+
+      <div class="contrib-card">
+        <div class="contrib-name">Phan An</div>
+        <div class="contrib-handle">@phanan</div>
+        <div class="contrib-project">koel — Music Streaming</div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">All-time commits</span>
+          <span class="contrib-stat-value">3,156</span>
+        </div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Project score</span>
+          <span class="contrib-stat-value score-great">8.70</span>
+        </div>
+        <div class="contrib-why">
+          Authored a CLAUDE.md that prohibits config() in services, mandates read-only repositories,
+          and requires typed factories. Conventional Commits, small focused changes.
+          The only maintainer whose architecture rules are machine-checkable.
+        </div>
+      </div>
+
+      <div class="contrib-card">
+        <div class="contrib-name">Dan Brown</div>
+        <div class="contrib-handle">@ssddanbrown</div>
+        <div class="contrib-project">bookstack — Wiki Platform</div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">All-time commits</span>
+          <span class="contrib-stat-value">4,118</span>
+        </div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Project score</span>
+          <span class="contrib-stat-value score-great">7.70</span>
+        </div>
+        <div class="contrib-why">
+          Solo maintainer of a 189K LOC wiki platform at 8/8/8/8/7 scores.
+          Invented Queries/Repos split, JointPermission pre-computed ACL table,
+          and wrote ssddanbrown/asserthtml for custom DOM test assertions.
+        </div>
+      </div>
+
+      <div class="contrib-card">
+        <div class="contrib-name">Alexis Saettler</div>
+        <div class="contrib-handle">monica team</div>
+        <div class="contrib-project">monica — Personal CRM</div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Test files</span>
+          <span class="contrib-stat-value">516</span>
+        </div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Project score</span>
+          <span class="contrib-stat-value score-great">7.95</span>
+        </div>
+        <div class="contrib-why">
+          BaseService + QueuableService pattern: every one of 261 service classes follows
+          rules() → permissions() → execute(). Test structure mirrors domain structure exactly.
+          The clearest Service Object pattern implementation in this corpus.
+        </div>
+      </div>
+
+      <div class="contrib-card">
+        <div class="contrib-name">Andras Bacsai</div>
+        <div class="contrib-handle">@andrasbacsai</div>
+        <div class="contrib-project">coolify — Self-hosted PaaS</div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Commits (90d)</span>
+          <span class="contrib-stat-value">898</span>
+        </div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Contributors (90d)</span>
+          <span class="contrib-stat-value">60</span>
+        </div>
+        <div class="contrib-why">
+          Managing 898 commits, 60 contributors in 90 days while producing parameterised
+          Pest security test datasets (shell injection, IDOR, path traversal) and
+          ValidationPatterns.php centralised regex factory. Security-minded at velocity.
+        </div>
+      </div>
+
+      <div class="contrib-card">
+        <div class="contrib-name">David Bomba</div>
+        <div class="contrib-handle">@turbo124</div>
+        <div class="contrib-project">invoiceninja — Billing SaaS</div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">All-time commits</span>
+          <span class="contrib-stat-value">18,552</span>
+        </div>
+        <div class="contrib-stat">
+          <span class="contrib-stat-label">Codebase size</span>
+          <span class="contrib-stat-value">1.04M LOC</span>
+        </div>
+        <div class="contrib-why">
+          18,552 commits building 1M LOC — singular achievement. Fractal transformer pattern
+          for API versioning across 300+ transformers and the payment driver strategy for 50+
+          gateways are genuinely sophisticated. The debt is the cost of sustained solo velocity.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LESSONS LEARNED -->
+<section id="lessons">
+  <div class="wrap">
+    <div class="eyebrow">Engineering Synthesis</div>
+    <h2>Lessons Learned</h2>
+    <div class="lessons-grid">
+
+      <div class="lesson-item">
+        <div class="lesson-num">01</div>
+        <div>
+          <div class="lesson-title">A CLAUDE.md encoding architecture is worth more than a wiki</div>
+          <p class="lesson-body">
+            koel's CLAUDE.md explicitly prohibits config() calls in services, requires repositories to be read-only,
+            and mandates throw_if over bare throw. These are actionable, checkable rules — not documentation that
+            describes what code does, but rules that constrain what code may do. Every other project has either no
+            documentation or prose that rots as the codebase evolves. The CLAUDE.md approach makes architecture
+            refusals automatic rather than opinion-based, for AI agents and human contributors equally.
+          </p>
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-num">02</div>
+        <div>
+          <div class="lesson-title">PHPStan level matters more than its presence</div>
+          <p class="lesson-body">
+            Level 4 with broad suppressions may be worse than no PHPStan — it signals "we have static analysis"
+            while hiding the same bugs it would catch at level 6. The false confidence is the hazard. The projects
+            with the fewest code quality issues (koel, subscriptionify, monica) all run at genuinely enforced levels.
+            One finding type matters most: "Call to an undefined method" must never be suppressed across an entire
+            codebase — especially in financial applications.
+          </p>
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-num">03</div>
+        <div>
+          <div class="lesson-title">The Action pattern moves the God class — it doesn't kill it</div>
+          <p class="lesson-body">
+            Every project that adopted Action classes (coolify, laraowl, koel) is better for it — fat controllers
+            are gone. But coolify's ApplicationDeploymentJob (4,894 LOC), bagisto's Cart.php (1,204 LOC), and
+            invoiceninja's PdfBuilder (2,410 LOC) prove that complex operations will always find a container.
+            Decomposition is a discipline applied at every level, not a one-time architectural decision.
+          </p>
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-num">04</div>
+        <div>
+          <div class="lesson-title">Package constraints force the decisions application developers avoid</div>
+          <p class="lesson-body">
+            subscriptionify (5K LOC package) scores 8.20 — higher than every full application except koel and monica.
+            Package development mandates interface contracts, injectable dependencies, config-driven behaviour, and
+            isolated testability. These are exactly the decisions large application codebases accumulate as technical
+            debt when left optional. Building a package before a feature is a practical forcing function.
+          </p>
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-num">05</div>
+        <div>
+          <div class="lesson-title">PHPStan error density measures implicit PHP, not absolute quality</div>
+          <p class="lesson-body">
+            From a root scan without project-specific configs: invoiceninja gets 2 errors, akaunting gets 1,
+            but coolify gets 22,065 and subscriptionify 593. This doesn't mean invoiceninja is 11,000× better.
+            It means invoiceninja's code is more explicit — fewer unresolved facade calls and Laravel magic methods.
+            Coolify's architecture relies more on globally-autoloaded helpers PHPStan can't resolve without a project
+            bootstrap. Error density here measures how much the project relies on Laravel's magic — a real signal,
+            but not the complete picture.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-note">
+        Laravel Engineering Portfolio Review — June 2026<br>
+        PHPStan 2.2.2 · Larastan 3.x · PHP 8.4 · Root scan (no project autoloaders)
+      </div>
+      <div class="footer-note" style="text-align:right">
+        Scoring: Architecture×0.25 + Quality×0.25 + Maintainability×0.20<br>
+        + Design Patterns×0.10 + Technical Debt×0.10 + Activity×0.10
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const P = [
+  {
+    rank:1, slug:'koel', name:'koel',
+    overall:8.70, arch:9, qual:9, maint:9, patt:9, debt:8, act:7,
+    phpstanErrors:6059, phpstanDensity:83.77,
+    loc:'72K', testFiles:323, commits90d:248, contributors90d:6,
+    laravel:11, maintainer:'Phan An (@phanan)', tag:'Architecture Reference',
+    summary:'Music streaming app. Highest-scoring project in the corpus. Sets the benchmark: read-only repositories, readonly Value Objects, targeted PHPStan suppressions, and a CLAUDE.md that encodes architecture as enforceable rules — not prose, but machine-checkable constraints.',
+    patterns:['Readonly DTOs','Custom Eloquent Builders','Repository Pattern','Pipeline','Service Objects','Saloon HTTP','Action Classes'],
+    strengths:[
+      'CLAUDE.md prohibits config() in services (#[Config] attribute required), mandates read-only repositories, enforces throw_if over bare throw',
+      'Custom Eloquent builders per model reduce query complexity leaking into service layer',
+      'readonly final Value Objects (app/Values/) with private constructors and static make() — immutable by design'
+    ],
+    weaknesses:[
+      'PHPStan density of 83/KLOC from root scan reflects heavy Saloon/Facade usage without project bootstrap',
+      'Single maintainer dependency — Phan An holds near 100% of recent commits',
+      'app/Ai/ namespace is early-stage with thin test coverage relative to its depth'
+    ],
+    risks:[
+      'Bus factor of 1 — any extended maintainer absence stalls security patches and feature development',
+      'Saloon integration deeply tied to one HTTP client abstraction that may diverge from Laravel core ecosystem'
+    ],
+    recs:[
+      'Add CODEOWNERS to distribute PR review responsibility across trusted contributors',
+      'Expand test coverage for app/Ai/ before the namespace grows further',
+      'Increase PHPStan from level 5 to 6 and address new findings incrementally'
+    ]
+  },
+  {
+    rank:2, slug:'subscriptionify', name:'subscriptionify',
+    overall:8.20, arch:9, qual:9, maint:8, patt:9, debt:8, act:4,
+    phpstanErrors:593, phpstanDensity:119.03,
+    loc:'5K', testFiles:12, commits90d:19, contributors90d:3,
+    laravel:'12', maintainer:'Small team', tag:'Package Gold Standard',
+    summary:'Standalone Laravel package for subscription and feature flag management. Package constraints forced excellent design decisions: final readonly DTOs, injectable feature resolvers, config-driven behaviour. PHPStan at level max — the only project in this corpus running genuine full-level enforcement with larastan.',
+    patterns:['Final Readonly DTOs','Private Constructor','Static Factory','Strategy Pattern','Service Container','Config-driven'],
+    strengths:[
+      'PHPStan at level max with larastan — zero blanket suppressions, the only project in the corpus with genuine full enforcement',
+      'Final readonly DTOs: ConsumptionResult, FeatureInfo, ResolvedFeature all use private __construct and static make()',
+      'Zero global helper functions — every dependency is injectable via the service container'
+    ],
+    weaknesses:[
+      'Low activity (19 commits, 3 contributors in 90d) — adoption and maintenance risk',
+      'PHPStan density of 119/KLOC is highest in corpus — reflects framework-magic reliance in an isolated package context',
+      'Only 12 test files for billing-sensitive logic that will be used in financial contexts'
+    ],
+    risks:[
+      'Low community adoption means fewer real-world edge cases discovered and reported',
+      'Package pinned to narrow Laravel version range may drift from ecosystem compatibility'
+    ],
+    recs:[
+      'Add feature flag / A-B testing integration as a natural package extension',
+      'Publish architectural decision records (ADRs) to attract informed contributors',
+      'Increase test file count to cover more consumption and overage edge cases'
+    ]
+  },
+  {
+    rank:3, slug:'monica', name:'monica',
+    overall:7.95, arch:9, qual:8, maint:9, patt:9, debt:8, act:2,
+    phpstanErrors:6657, phpstanDensity:49.46,
+    loc:'134K', testFiles:516, commits90d:0, contributors90d:0,
+    laravel:11, maintainer:'Alexis Saettler + team', tag:'DDD Reference',
+    summary:'Personal CRM with the most test files in the corpus (516). Vertical-slice domain architecture in app/Domains/ is the clearest example of domain-driven design in this analysis. BaseService lifecycle (rules → permissions → execute) applied across 261 service classes.',
+    patterns:['Vertical Slice','DDD Domains','BaseService Lifecycle','QueuableService','Service Interface','Event-Driven'],
+    strengths:[
+      'Vertical-slice architecture: app/Domains/{Domain}/{Feature}/ contains all services, controllers, viewhelpers, and tests per feature in one location',
+      'BaseService + ServiceInterface: every service follows rules() → permissions() → execute() — consistent lifecycle across 261 classes',
+      'QueuableService: extends any service into a dispatchable job with zero code duplication — clean async abstraction'
+    ],
+    weaknesses:[
+      '0 commits in local 90-day window — submodule pinned to Aug 2025 snapshot; actual upstream activity may differ',
+      'PHPStan enforced but not at maximum strictness across all domain boundaries',
+      'Some legacy domain code predates the vertical-slice pattern creating structural inconsistency'
+    ],
+    risks:[
+      'Activity score of 2 reflects frozen local snapshot — update submodule hash to get accurate picture',
+      '134K LOC with 516 test files still leaves some domain service paths under-covered'
+    ],
+    recs:[
+      'Update submodule to latest main commit to restore accurate activity and contribution metrics',
+      'Enforce consistent BaseService usage across legacy domain code that predates the pattern',
+      'Add contract tests for high-risk CRM operations: contact merge, account linking, data export'
+    ]
+  },
+  {
+    rank:4, slug:'bookstack', name:'bookstack',
+    overall:7.70, arch:8, qual:8, maint:8, patt:8, debt:7, act:6,
+    phpstanErrors:6153, phpstanDensity:32.62,
+    loc:'189K', testFiles:161, commits90d:111, contributors90d:6,
+    laravel:12, maintainer:'Dan Brown (@ssddanbrown)', tag:'Solo Maintainer Excellence',
+    summary:'Wiki platform maintained solo by Dan Brown. Uncommonly mature architectural decisions for a single-maintainer project: Queries/Repos read-write split, JointPermission pre-computed permission table for ACL performance, and a custom HTML assertion library written specifically for this codebase.',
+    patterns:['Query Object','Repository Pattern','Queries/Repos Split','Pre-computed Permissions','Event-Driven','Custom Test Assertions'],
+    strengths:[
+      'Queries/Repos split: separate read-side query objects from write-side repositories — uncommonly sophisticated for a solo project',
+      'JointPermission pre-computed permission table as performance optimisation for complex nested entity ACLs',
+      'ssddanbrown/asserthtml: maintainer wrote a custom DOM test assertion library — genuine test infrastructure investment'
+    ],
+    weaknesses:[
+      'PHPStan at level 4 — conservative enforcement leaves type errors undetected that would surface at level 6',
+      'Solo maintainer with ~100 of 111 recent commits — any absence stalls security patches',
+      '161 test files for 189K LOC is modest coverage for a platform handling document access control'
+    ],
+    risks:[
+      'Solo maintenance at scale — extended absence blocks security patches for sensitive wiki content',
+      'Level 4 PHPStan may miss type errors in the permission system that only surface at higher levels'
+    ],
+    recs:[
+      'Increase PHPStan to level 5 and address new findings in the Queries/ layer incrementally',
+      'Document JointPermission architecture for potential contributors who need to modify ACL behaviour',
+      'Implement automated security advisory review in CI rather than manual tracking'
+    ]
+  },
+  {
+    rank:5, slug:'october', name:'october',
+    overall:7.15, arch:8, qual:7, maint:7, patt:8, debt:6, act:6,
+    phpstanErrors:11789, phpstanDensity:63.04,
+    loc:'187K', testFiles:1, commits90d:122, contributors90d:10,
+    laravel:11, maintainer:'Samuel Georges (@daftspunk)', tag:'CMS Architecture',
+    summary:'October CMS with a plugin/module architecture. Strong CMS-layer patterns: well-designed extension system, consistent event/listener model, Twig component system. Significant concerns: security advisory blocking disabled and near-zero test coverage for 187K LOC.',
+    patterns:['Plugin System','Module Architecture','Event/Listener','Component System','CMS Plugins','Template Inheritance'],
+    strengths:[
+      'Module system (modules/ + plugins/ + themes/) is a well-designed layered extension architecture',
+      'Consistent event/listener system across all modules using a reliable string-based naming convention',
+      'Twig component system is a genuinely innovative UI abstraction for the Laravel ecosystem'
+    ],
+    weaknesses:[
+      'composer.json sets advisories: block: false — security advisory blocking explicitly disabled for a CMS serving public content',
+      'Only 1 test file for 187K LOC — the testing culture is functionally absent from the project',
+      'String-based event names ("catalog.product.create.after") instead of typed Event classes loses IDE support and refactoring safety'
+    ],
+    risks:[
+      'Disabled security advisories could mask actively exploited vulnerabilities in a CMS handling public-facing content',
+      'Near-zero test coverage makes core module refactoring extremely high-risk for a mature plugin ecosystem'
+    ],
+    recs:[
+      'Re-enable security advisory blocking and address outstanding advisories with documented accept/reject decisions',
+      'Introduce typed Event classes for new module events — migration path for existing string-based events',
+      'Add at minimum smoke tests for core module lifecycle hooks (install, update, activate, deactivate)'
+    ]
+  },
+  {
+    rank:6, slug:'invoiceninja', name:'invoiceninja',
+    overall:6.85, arch:7, qual:6, maint:7, patt:7, debt:5, act:10,
+    phpstanErrors:2, phpstanDensity:0.00,
+    loc:'1.04M', testFiles:442, commits90d:657, contributors90d:11,
+    laravel:12, maintainer:'David Bomba (turbo124)', tag:'Highest Activity',
+    summary:'Largest codebase in corpus at 1.04M LOC. Most active major project (657 commits/90d). Built almost entirely by David Bomba (18,552 all-time commits). PHPStan reports only 2 errors because explicit PHP avoids facade magic, but phpstan.neon suppresses "Call to undefined method" — significant hidden debt in a financial application.',
+    patterns:['Repository Pattern','Fractal Transformers','Payment Strategy','Service Layer','Observer','Event-Driven','Fractal API'],
+    strengths:[
+      'Fractal transformer pattern: clean API versioning abstraction applied consistently across 300+ transformer classes',
+      'Payment driver strategy: well-defined abstraction for 50+ payment gateways behind a uniform interface',
+      'Most active open-source billing system: 657 commits, 11 contributors in 90 days — genuine community'
+    ],
+    weaknesses:[
+      'phpstan.neon blanket-suppresses "Call to an undefined method" across the entire codebase — a financial application',
+      'BaseRepository::alternativeSave() is 444 lines in a single method — God method anti-pattern at the base of every repository',
+      '93,972-line SMSNumbers.php PHP array file — should be a database table or lazy-loaded CSV'
+    ],
+    risks:[
+      'PHPStan suppressions in a billing codebase represent unquantified type-safety debt across payment and invoice paths',
+      'David Bomba commit concentration (17,000+/18,552 all-time) — catastrophic bus factor for 1M LOC'
+    ],
+    recs:[
+      'Remove blanket PHPStan suppressions and address method-not-found errors one namespace at a time',
+      'Extract SMSNumbers.php into a database-backed lookup seeded via migration',
+      'Establish a succession plan and document core architecture for the next maintainer'
+    ]
+  },
+  {
+    rank:7, slug:'bagisto', name:'bagisto',
+    overall:6.80, arch:7, qual:7, maint:6, patt:7, debt:6, act:8,
+    phpstanErrors:14067, phpstanDensity:29.07,
+    loc:'484K', testFiles:2, commits90d:326, contributors90d:15,
+    laravel:12, maintainer:'Webkul team', tag:'Commerce Platform',
+    summary:'Laravel ecommerce platform with a 42-package Webkul module structure. Active community (326 commits, 15 contributors). Critical gap: only 2 test files at app level and only 11 of 42 packages tested — the entire commerce core (Product, Cart, Sales, Tax) has zero coverage.',
+    patterns:['Package Modules','Repository Pattern','Event/Listener','Service Layer','AI Integration','GraphQL','Inertia.js'],
+    strengths:[
+      'Package-based module system (packages/Webkul/) enables genuine feature isolation across 42 commerce packages',
+      'AI integration already in production (laravel/ai 0.2.2) with product recommendation and search use cases',
+      'Active contributor community: 15 contributors, 326 commits in 90 days — healthy open-source momentum'
+    ],
+    weaknesses:[
+      'Only 11 of 42 packages tested — Product, Cart, Sales, Tax, Shipping, Inventory packages have zero coverage',
+      'Cart.php is 1,204 LOC God class with no tests — any checkout change risks silent regression',
+      'Empty marker interfaces (interface Product {}) give the appearance of contracts without enforcement or IDE support'
+    ],
+    risks:[
+      'Cart.php God class with zero tests — checkout flow refactoring carries extreme regression risk',
+      '31 untested commerce-core packages mean any bagisto PR can break checkout, tax, or inventory silently'
+    ],
+    recs:[
+      'Prioritise test coverage for Cart, Checkout, Tax, and Payment packages before any refactoring',
+      'Split Cart.php into focused domain services: CartValidator, CartCalculator, CartPersistence',
+      'Replace empty marker interfaces with genuine contracts defining required methods and return types'
+    ]
+  },
+  {
+    rank:8, slug:'coolify', name:'coolify',
+    overall:6.65, arch:7, qual:6, maint:7, patt:6, debt:4, act:10,
+    phpstanErrors:22065, phpstanDensity:96.97,
+    loc:'228K', testFiles:407, commits90d:898, contributors90d:60,
+    laravel:12, maintainer:'Andras Bacsai (@andrasbacsai)', tag:'Highest Community Activity',
+    summary:'Self-hosted PaaS with the most active contributor base in the corpus (898 commits, 60 contributors in 90 days). Exemplary security test suite. Primary liability: ApplicationDeploymentJob at 4,894 LOC undermines all other architectural discipline — the exact scenario the Action pattern was supposed to prevent.',
+    patterns:['Action Classes','Livewire','OpenAPI Attributes','Security Tests','Validation Patterns','Event-Driven','Job Queues'],
+    strengths:[
+      'Security test suite: parameterised Pest datasets for shell injection, IDOR, and path traversal — security regressions are caught',
+      'ValidationPatterns.php: centralised regex constants with factory methods for security-critical URL/domain/port validation',
+      'OpenAPI 3.0 attributes wired directly on controllers — API documentation stays in sync with code by construction'
+    ],
+    weaknesses:[
+      'ApplicationDeploymentJob.php: 4,894 LOC handling Git, Docker, Nixpacks, Railpack, health checks, rollback, multi-server in one class',
+      '18 global helper files in bootstrap/helpers/ totalling 8,000+ LOC (shared.php: 4,176 lines) — cannot be mocked or replaced',
+      'PHPStan density of 96.97/KLOC reflects massive unresolvable global function surface'
+    ],
+    risks:[
+      'ApplicationDeploymentJob is untestable at full branch coverage — any change risks regression across all deployment target types',
+      '18 global helper files create invisible cross-cutting dependencies throughout the deployment codebase'
+    ],
+    recs:[
+      'Decompose ApplicationDeploymentJob into strategy classes per deployment type: DockerDeployment, NixpacksDeployment, RailpackDeployment',
+      'Migrate bootstrap/helpers/ functions into service classes registered in the container',
+      'Add integration test coverage specifically targeting ApplicationDeploymentJob branch paths'
+    ]
+  },
+  {
+    rank:9, slug:'laraowl', name:'laraowl',
+    overall:6.40, arch:7, qual:7, maint:6, patt:7, debt:6, act:4,
+    phpstanErrors:786, phpstanDensity:63.57,
+    loc:'12K', testFiles:19, commits90d:21, contributors90d:5,
+    laravel:12, maintainer:'laraowl team', tag:'Security Risk',
+    summary:'Small uptime monitoring application. Good adoption of modern patterns: Action classes, Inertia.js + React, Pest tests. Critical security issue: VerifyLaraowlToken middleware compares API tokens using direct string equality, making it vulnerable to timing attacks.',
+    patterns:['Action Classes','Inertia.js','React','Pest Tests','Repository Pattern','Queue Jobs'],
+    strengths:[
+      'Clean Actions/ directory structure using lorisleiva/laravel-actions — no fat controllers',
+      'Inertia.js + React frontend keeps server/client boundary explicit and avoids blade/JS mixing',
+      'Pest test suite with 19 files — appropriate ratio for a 12K LOC codebase'
+    ],
+    weaknesses:[
+      'VerifyLaraowlToken middleware uses direct string comparison for API tokens — timing attack vulnerability, hash_equals() required',
+      'RecordService.php at 977 LOC is a God class in a 12K LOC application (8% of entire codebase in one file)',
+      'Low activity (21 commits, 5 contributors in 90d) — maintenance confidence is limited'
+    ],
+    risks:[
+      'Critical: plaintext token comparison in VerifyLaraowlToken is exploitable via timing analysis to enumerate valid tokens',
+      'RecordService God class means a monitoring ingestion bug can affect the entire application'
+    ],
+    recs:[
+      'Immediate fix: replace direct string comparison with hash_equals() in VerifyLaraowlToken',
+      'Decompose RecordService into focused services per monitor type: HttpMonitorService, DnsMonitorService, PingMonitorService',
+      'Increase test coverage specifically for the monitoring ingestion and alerting critical paths'
+    ]
+  },
+  {
+    rank:10, slug:'akaunting', name:'akaunting',
+    overall:6.25, arch:7, qual:6, maint:6, patt:7, debt:5, act:6,
+    phpstanErrors:1, phpstanDensity:0.00,
+    loc:'240K', testFiles:38, commits90d:143, contributors90d:5,
+    laravel:12, maintainer:'akaunting team', tag:'Security Concern',
+    summary:'Full accounting application. Explicit PHP gives PHPStan only 1 error from root scan. Critical security red flags: 22 Packagist security advisories suppressed in a financial application (block-insecure: false), no PHPStan config, and vendor code forked in overrides/ making upstream security patches non-automatic.',
+    patterns:['Job Lifecycle','Eloquent Scopes','Module System','Livewire','Multi-tenant','Event-Driven'],
+    strengths:[
+      'Job lifecycle patterns with proper queue configuration for accounting operation processing',
+      'Multi-currency and multi-company Eloquent scope handling across accounting entities',
+      'Module system allows accounting features to be loaded selectively per tenant'
+    ],
+    weaknesses:[
+      '22 Packagist security advisories suppressed with block-insecure: false — in a financial application handling invoices and taxes',
+      'No PHPStan config — zero static analysis enforcement in an accounting codebase processing financial transactions',
+      'override/ directory forks Illuminate, Livewire, and symfony/process — upstream security patches do not auto-apply'
+    ],
+    risks:[
+      '22 unaddressed security advisories in a financial application is a direct regulatory and liability risk',
+      'Vendor forking in override/ decouples the codebase from upstream security maintenance permanently'
+    ],
+    recs:[
+      'Immediate: address or document each of the 22 security advisories with an accept/remediate decision and expiry date',
+      'Add phpstan.neon at level 3 minimum to establish a static analysis baseline',
+      'Replace override/ vendor forks with upstream contributions or configuration-based workarounds'
+    ]
+  },
+  {
+    rank:11, slug:'cachet', name:'cachet',
+    overall:4.95, arch:6, qual:7, maint:3, patt:6, debt:4, act:1,
+    phpstanErrors:48, phpstanDensity:18.96,
+    loc:'2.5K', testFiles:0, commits90d:2, contributors90d:1,
+    laravel:12, maintainer:'James Brooks (@jbrooksuk)', tag:'Avoid as Reference',
+    summary:'Status page application with only 35 PHP files in the shell — all domain logic lives in a private cachethq/core package pinned to dev-main with no version tag. Zero tests. 2 commits from 1 contributor in 90 days. Not production-ready as an engineering reference.',
+    patterns:['Package Extraction','Thin Shell','Config-driven'],
+    strengths:[
+      'Domain extraction to a private package is architecturally sound — the intent is correct',
+      'Thin application shell is easy to reason about in isolation',
+      'cachethq/core separation demonstrates understanding of bounded contexts even if execution is incomplete'
+    ],
+    weaknesses:[
+      'Zero test files anywhere in the project — no regression detection',
+      'cachethq/core dependency pinned to dev-main — any push to that package can break the app silently with no version contract',
+      '35 PHP files cannot represent a production status page system — all value is in an inaccessible private package'
+    ],
+    risks:[
+      'dev-main dependency means the package can change incompatibly at any moment with no semantic version contract',
+      'Zero tests + dev-main dependency = no way to detect when an upstream change breaks the application'
+    ],
+    recs:[
+      'Pin cachethq/core to a specific git commit hash at minimum, or publish proper semantic versions to Packagist',
+      'Add smoke tests for the public status page endpoints before promoting as a reference',
+      'Evaluate merging the application shell back into the core package rather than maintaining a separate thin wrapper'
+    ]
+  }
+];
+
+function scoreClass(s){
+  if(s>=8)return'score-great';
+  if(s>=6.5)return'';
+  return'score-poor';
+}
+function dimBadgeClass(s){
+  if(s>=8)return'badge-great';
+  if(s>=6)return'badge-good';
+  return'badge-poor';
+}
+function scoreColor(s){
+  if(s>=8)return'var(--emerald)';
+  if(s>=6.5)return'#F0C040';
+  return'var(--rose)';
+}
+function dimColor(s){
+  if(s>=8)return'var(--emerald)';
+  if(s>=6)return'#F0C040';
+  return'var(--rose)';
+}
+function fmtErrors(n){
+  if(n===0)return'—';
+  if(n>=1000)return(n/1000).toFixed(1)+'K';
+  return n.toString();
+}
+
+// Build ranking table
+(function(){
+  const tbody = document.getElementById('rankTableBody');
+  P.forEach(p=>{
+    const barW = (p.overall/10*100).toFixed(1)+'%';
+    const tr = document.createElement('tr');
+    tr.className='rank-'+p.rank;
+    tr.onclick=()=>openProject(p.slug);
+    tr.innerHTML=`
+      <td>
+        <div class="row-inner">
+          <div class="rank-num">${String(p.rank).padStart(2,'0')}</div>
+          <div>
+            <div class="proj-name">${p.name}</div>
+            <div class="proj-maintainer">${p.maintainer}</div>
+          </div>
+          <div class="overall-score" style="color:${scoreColor(p.overall)}">${p.overall.toFixed(2)}</div>
+          <div class="dim-badge ${dimBadgeClass(p.arch)} dim-cols">${p.arch}</div>
+          <div class="dim-badge ${dimBadgeClass(p.qual)} dim-cols">${p.qual}</div>
+          <div class="dim-badge ${dimBadgeClass(p.maint)} dim-cols">${p.maint}</div>
+          <div class="dim-badge ${dimBadgeClass(p.patt)} dim-cols">${p.patt}</div>
+          <div class="dim-badge ${dimBadgeClass(p.debt)} dim-cols">${p.debt}</div>
+          <div class="dim-badge ${dimBadgeClass(p.act)} dim-cols">${p.act}</div>
+          <div class="phpstan-cell phpstan-col">${fmtErrors(p.phpstanErrors)}</div>
+          <div class="activity-cell activity-col">${p.commits90d}</div>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+})();
+
+// Build accordion
+(function(){
+  const acc = document.getElementById('accordion');
+  P.forEach(p=>{
+    const item = document.createElement('div');
+    item.className='proj-item';
+    item.id='proj-'+p.slug;
+
+    const dims=[
+      {label:'Architecture',val:p.arch},
+      {label:'Code Quality',val:p.qual},
+      {label:'Maintainability',val:p.maint},
+      {label:'Design Patterns',val:p.patt},
+      {label:'Tech Debt',val:p.debt},
+      {label:'Activity',val:p.act}
+    ];
+
+    const scoreGridHtml=dims.map(d=>`
+      <div class="score-cell">
+        <div class="score-cell-label">${d.label}</div>
+        <div class="score-cell-num" style="color:${dimColor(d.val)}">${d.val}</div>
+      </div>`).join('');
+
+    const strHtml=p.strengths.map(s=>`<li>${s}</li>`).join('');
+    const wkHtml=p.weaknesses.map(s=>`<li>${s}</li>`).join('');
+    const rkHtml=p.risks.map(s=>`<li>${s}</li>`).join('');
+    const rcHtml=p.recs.map(s=>`<li>${s}</li>`).join('');
+    const ptHtml=p.patterns.map(t=>`<span class="pattern-tag">${t}</span>`).join('');
+
+    item.innerHTML=`
+      <button class="proj-trigger" onclick="toggleProject('${p.slug}')">
+        <div class="trigger-left">
+          <div class="trigger-rank">#${p.rank}</div>
+          <div class="trigger-name">${p.name}</div>
+          <div class="trigger-tag">${p.tag}</div>
+        </div>
+        <div class="trigger-right">
+          <div class="trigger-score" style="color:${scoreColor(p.overall)}">${p.overall.toFixed(2)}</div>
+          <svg class="trigger-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </button>
+      <div class="proj-panel" id="panel-${p.slug}">
+        <p style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.75">${p.summary}</p>
+        <div class="pattern-tags">${ptHtml}</div>
+
+        <div class="scorecard-grid" style="margin-top:20px">${scoreGridHtml}</div>
+
+        <div class="phpstan-strip">
+          <div class="phpstan-cell-inner">
+            <div class="phpstan-cell-num">${fmtErrors(p.phpstanErrors)}</div>
+            <div class="phpstan-cell-label">PHPStan Errors</div>
+          </div>
+          <div class="phpstan-cell-inner">
+            <div class="phpstan-cell-num">${p.phpstanDensity.toFixed(1)}</div>
+            <div class="phpstan-cell-label">Errors / KLOC</div>
+          </div>
+          <div class="phpstan-cell-inner">
+            <div class="phpstan-cell-num">${p.loc}</div>
+            <div class="phpstan-cell-label">Lines of Code</div>
+          </div>
+          <div class="phpstan-cell-inner">
+            <div class="phpstan-cell-num">${p.testFiles}</div>
+            <div class="phpstan-cell-label">Test Files</div>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <h4>Strengths</h4>
+            <ul class="strengths">${strHtml}</ul>
+          </div>
+          <div class="detail-card">
+            <h4>Weaknesses</h4>
+            <ul class="weaknesses">${wkHtml}</ul>
+          </div>
+          <div class="detail-card">
+            <h4>Key Risks</h4>
+            <ul class="risks">${rkHtml}</ul>
+          </div>
+          <div class="detail-card">
+            <h4>Recommendations</h4>
+            <ul class="recs">${rcHtml}</ul>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:16px;font-family:var(--mono);font-size:12px;color:var(--muted)">
+          <span>Laravel ${p.laravel}</span>
+          <span>·</span>
+          <span>${p.commits90d} commits / 90d</span>
+          <span>·</span>
+          <span>${p.contributors90d} contributors / 90d</span>
+        </div>
+      </div>`;
+
+    acc.appendChild(item);
+  });
+})();
+
+function toggleProject(slug){
+  const panel=document.getElementById('panel-'+slug);
+  const trigger=panel.previousElementSibling;
+  const isOpen=panel.classList.contains('open');
+  panel.classList.toggle('open',!isOpen);
+  trigger.classList.toggle('active',!isOpen);
+}
+
+function openProject(slug){
+  const target=document.getElementById('proj-'+slug);
+  if(!target)return;
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{
+    const panel=document.getElementById('panel-'+slug);
+    if(!panel.classList.contains('open')){
+      panel.classList.add('open');
+      panel.previousElementSibling.classList.add('active');
+    }
+  },300);
+}
+
+// Animate score bars on scroll
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.score-bar-fill').forEach(b=>b.classList.add('animate'));
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.rank-table tbody tr').forEach(r=>observer.observe(r));
+</script>
