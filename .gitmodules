@@ -1,0 +1,43 @@
+[submodule "apps/akaunting"]
+	path = apps/akaunting
+	url = git@github.com:akaunting/akaunting.git
+
+[submodule "apps/bagisto"]
+	path = apps/bagisto
+	url = git@github.com:bagisto/bagisto.git
+
+[submodule "apps/bookstack"]
+	path = apps/bookstack
+	url = git@github.com:BookStackApp/BookStack.git
+
+[submodule "apps/cachet"]
+	path = apps/cachet
+	url = git@github.com:cachethq/cachet.git
+
+[submodule "apps/coolify"]
+	path = apps/coolify
+	url = git@github.com:coollabsio/coolify.git
+
+[submodule "apps/invoiceninja"]
+	path = apps/invoiceninja
+	url = git@github.com:invoiceninja/invoiceninja.git
+
+[submodule "apps/koel"]
+	path = apps/koel
+	url = git@github.com:koel/koel.git
+
+[submodule "apps/laraowl"]
+	path = apps/laraowl
+	url = git@github.com:laraowl/laraowl.git
+
+[submodule "apps/monica"]
+	path = apps/monica
+	url = git@github.com:monicahq/monica.git
+
+[submodule "apps/october"]
+	path = apps/october
+	url = git@github.com:octobercms/october.git
+
+[submodule "apps/subscriptionify"]
+	path = apps/subscriptionify
+	url = git@github.com:revoltify/subscriptionify.git
