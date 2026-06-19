@@ -1,4 +1,13 @@
 {
+    "name": "nei/laravel-projects-analyse",
+    "description": "Comparative engineering review of 11 open-source Laravel applications — static analysis, architecture, and git activity metrics.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nei Santos",
+            "email": "nei@inuartech.com"
+        }
+    ],
     "require-dev": {
         "larastan/larastan": "^3.10"
     }
