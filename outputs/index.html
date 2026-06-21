@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <title>Laravel Engineering Portfolio Review — June 2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -192,22 +193,26 @@ header{
   font-size:14px;
 }
 .rank-table th{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:left;
-  padding:12px 16px;
+  padding:0;
   border-bottom:1px solid var(--border);
-  white-space:nowrap;
+  display:block;
 }
-.rank-table th:not(:first-child){text-align:center}
 .rank-table td{
   padding:0;
   border-bottom:1px solid var(--border);
   vertical-align:middle;
 }
+.th-row{cursor:default;padding:10px 16px}
+.th-label{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+  text-align:center;
+}
+.th-label:first-child,.th-label:nth-child(2){text-align:left}
 .rank-table tbody tr:hover .row-inner{background:var(--surface2)}
 .row-inner{
   display:grid;
@@ -284,8 +289,6 @@ header{
   transition:width 0.6s ease;
 }
 
-/* TABLE DIM HEADINGS */
-.dim-th{text-align:center!important;width:52px}
 
 /* ACCORDION */
 .proj-accordion{display:flex;flex-direction:column;gap:1px;background:var(--border);border-radius:8px;overflow:hidden}
@@ -471,8 +474,11 @@ header{
 .insight-card.accent-rose{border-color:rgba(244,97,91,0.35)}
 .insight-card.accent-blue{border-color:rgba(88,101,242,0.35)}
 .insight-icon{
-  font-size:24px;
+  font-size:20px;
   margin-bottom:12px;
+  color:var(--accent);
+  font-family:var(--mono);
+  line-height:1;
 }
 .insight-card h3{
   font-family:var(--mono);
@@ -816,17 +822,21 @@ footer{
     <table class="rank-table">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Project</th>
-          <th style="text-align:center">Overall</th>
-          <th class="dim-th dim-cols">Arch</th>
-          <th class="dim-th dim-cols">Qual</th>
-          <th class="dim-th dim-cols">Maint</th>
-          <th class="dim-th dim-cols">Patt</th>
-          <th class="dim-th dim-cols">Debt</th>
-          <th class="dim-th dim-cols">Act</th>
-          <th class="phpstan-col" style="text-align:right">PHPStan Errors</th>
-          <th class="activity-col" style="text-align:right">Commits/90d</th>
+          <th>
+            <div class="row-inner th-row">
+              <span class="th-label">#</span>
+              <span class="th-label">Project</span>
+              <span class="th-label">Overall</span>
+              <span class="th-label dim-cols">Arch</span>
+              <span class="th-label dim-cols">Qual</span>
+              <span class="th-label dim-cols">Maint</span>
+              <span class="th-label dim-cols">Patt</span>
+              <span class="th-label dim-cols">Debt</span>
+              <span class="th-label dim-cols">Act</span>
+              <span class="th-label phpstan-col" style="text-align:right">PHPStan Errors</span>
+              <span class="th-label activity-col" style="text-align:right">Commits/90d</span>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody id="rankTableBody"></tbody>
@@ -853,7 +863,7 @@ footer{
     <div class="insights-grid">
 
       <div class="insight-card accent-rose">
-        <div class="insight-icon">⚠️</div>
+        <div class="insight-icon">⚠</div>
         <h3>PHPStan: Checkbox, Not Gate</h3>
         <p style="margin-bottom:12px">9 of 11 projects have PHPStan. Only 2 use it honestly.</p>
         <ul>
@@ -866,7 +876,7 @@ footer{
       </div>
 
       <div class="insight-card accent-amber">
-        <div class="insight-icon">🏛️</div>
+        <div class="insight-icon">◈</div>
         <h3>God Classes Never Die — They Move</h3>
         <p style="margin-bottom:12px">The fat controller died. The 4,894-line job class lives on.</p>
         <ul>
@@ -879,7 +889,7 @@ footer{
       </div>
 
       <div class="insight-card accent-rose">
-        <div class="insight-icon">🔓</div>
+        <div class="insight-icon">⊘</div>
         <h3>Security Advisories Suppressed in Financial Apps</h3>
         <p style="margin-bottom:12px">The most serious finding in this corpus.</p>
         <ul>
@@ -892,7 +902,7 @@ footer{
       </div>
 
       <div class="insight-card accent-emerald">
-        <div class="insight-icon">📈</div>
+        <div class="insight-icon">↗</div>
         <h3>What the Top Three Did Differently</h3>
         <p style="margin-bottom:12px">koel (8.70), subscriptionify (8.20), and monica (7.95) share three practices the rest don't.</p>
         <ul>
@@ -905,7 +915,7 @@ footer{
       </div>
 
       <div class="insight-card accent-blue">
-        <div class="insight-icon">🧩</div>
+        <div class="insight-icon">⬡</div>
         <h3>Patterns Converging Across the Ecosystem</h3>
         <p style="margin-bottom:12px">What's becoming the new normal in serious Laravel codebases.</p>
         <ul>
@@ -918,7 +928,7 @@ footer{
       </div>
 
       <div class="insight-card accent-amber">
-        <div class="insight-icon">📦</div>
+        <div class="insight-icon">⬡</div>
         <h3>Package Constraints Force Better Design</h3>
         <p style="margin-bottom:12px">subscriptionify at 5K LOC scores higher than most full applications.</p>
         <ul>
